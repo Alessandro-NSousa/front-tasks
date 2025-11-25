@@ -1,0 +1,30 @@
+<main> 
+    <!-- sessão de login -->
+    <section class="form-section">
+        <img src="/assets/svg/logo-2.svg"/>
+        <h2>{{title}}</h2>
+        <ng-content>
+            
+        </ng-content>
+        <div class="btn-wrapper">
+            <button class="btn-primary" 
+            (click)="submit()"
+            [disabled]="disablePrimaryBtn"
+            >
+                {{primaryBtnText}}
+            </button>
+            <div class="divider">
+                <div></div>
+                <span>ou</span>
+                <div></div>
+            </div>
+            <button class="btn-secondary" (click)="navigate()">{{secondaryBtnText}}</button>
+        </div>
+        
+    </section>
+    <!-- sessão da imagem -->
+    <section class="main-section">
+        <h2>Controle total das tarefas, zero complicação.</h2>
+        <img src="/assets/svg/kanban.svg"/>
+    </section>
+</main>
