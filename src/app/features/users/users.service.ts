@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { User } from './user';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { Page } from '../../models/page.model';
 
 export interface UserDTO {
   id: number;
@@ -11,21 +13,41 @@ export interface UserDTO {
   ativo: boolean;
 }
 
+export interface UserRequestDTO {
+  nome: string;
+  email: string;
+  senha: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  private apiUrl = 'http://localhost:8080/api/auth';
 
+  private apiUrl = environment.urlAuth;
   constructor(private http: HttpClient) { }
   
-  listarUsuarios(): Observable<{ content: User[] }> {
-    return this.http.get<{ content: User[] }>(this.apiUrl);
+  // listarUsuarios(): Observable<{ content: User[] }> {
+  //   return this.http.get<{ content: User[] }>(`${this.apiUrl}/auth`);
+  // }
+
+  listarUsuarios(page: number, size: number, sort: string) {
+    return this.http.get<Page<User>>(
+      `${this.apiUrl}/auth`,
+      {
+        params: {
+          page,
+          size,
+          sort
+        }
+      }
+    );
   }
 
-  cadastrarUsuario(dto: UserDTO): Observable<void> {
+
+  cadastrarUsuario(dto: UserRequestDTO): Observable<void> {
     console.log("dados: ", dto)
-    return this.http.post<void>(this.apiUrl, dto);
+    return this.http.post<void>(`${this.apiUrl}/auth/register`, dto);
   }
   
 }

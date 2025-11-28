@@ -22,3 +22,9 @@ html, body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.error {
+  color: #d32f2f; // vermelho padrão Material
+  font-size: 13px;
+  margin-top: 3px;
+}
