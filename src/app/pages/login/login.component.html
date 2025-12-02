@@ -8,25 +8,28 @@
 >
 
     <form [formGroup]="loginForm">
-        <app-primary-input
-            formControlName="email"
-            inputName="email"
-            type="email"
-            label="Email"
-            placeholder="Johndoe@gmail.com"
-        >
-            <img src="assets/svg/email-icon.svg" >
-        </app-primary-input>
 
-        <app-primary-input
-            formControlName="password"
-            inputName="password"
-            type="password"
-            label="Senha"
-        >
-            <img src="assets/svg/password-icon.svg" >
-        </app-primary-input>
-        <span>Esqueceu sua senha?</span>
-    </form>
+    <!-- EMAIL -->
+    <app-primary-input
+        formControlName="email"
+        label="Email"
+        placeholder="Johndoe@gmail.com"
+        type="email"
+        icon="mail"
+    >
+    </app-primary-input>
+
+    <!-- SENHA -->
+    <app-primary-input
+        formControlName="password"
+        label="Senha"
+        type="password"
+        icon="lock"
+    >
+    </app-primary-input>
+
+    <span class="forgot-password">Esqueceu sua senha?</span>
+
+</form>
 
 </app-default-login-layout>
