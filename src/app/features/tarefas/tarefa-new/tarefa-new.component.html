@@ -1,74 +1,51 @@
 <form [formGroup]="signupForm">
 
-        <div class="error" *ngIf="signupForm.controls.nome.touched && signupForm.controls.nome.invalid">
-            <span *ngIf="signupForm.controls.nome.errors?.['required']">Nome é obrigatório.</span>
-            <span *ngIf="signupForm.controls.nome.errors?.['minlength']">Use pelo menos 3 caracteres.</span>
+        <div class="error" *ngIf="signupForm.controls['titulo'].touched && signupForm.controls['titulo'].invalid">
+            <span *ngIf="signupForm.controls['titulo'].errors?.['required']">Título é obrigatório.</span>
+            <span *ngIf="signupForm.controls['titulo'].errors?.['minlength']">Use pelo menos 3 caracteres.</span>
         </div>
         <app-primary-input
-            formControlName="nome"
-            inputName="nome"
+            formControlName="titulo"
+            inputName="titulo"
             type="text"
-            label="Nome do Usuário"
-            placeholder="João Mendes"
+            label="Título"
         >   
         </app-primary-input>
         
-        <!-- email -->
-         <div class="error" *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid">
-            <span *ngIf="signupForm.controls.email.errors?.['required']">Email é obrigatório.</span>
-            <span *ngIf="signupForm.controls.email.errors?.['email']">Formato de email inválido.</span>
-        </div>
+        <!-- descrição -->
+         <div class="error" *ngIf="signupForm.controls['descricao'].touched && signupForm.controls['descricao'].invalid"></div>
         <app-primary-input
-            formControlName="email"
-            inputName="email"
-            type="email"
+            formControlName="descricao"
+            inputName="descricao"
+            type="text"
             label="Email"
-            placeholder="joao@gmail.com"
         >
         </app-primary-input>
 
-
-        <!-- role -->
-         <div class="error" *ngIf="signupForm.controls.role.touched && signupForm.controls.role.invalid">
-        <span>Selecione um tipo de usuário.</span>
+        <!-- status -->
+        <div class="error" *ngIf="signupForm.controls['status'].touched && signupForm.controls['status'].invalid">
+        <span>Selecione o Status da tarefa.</span>
         </div>
          <app-primary-select
-            formControlName="role"
-            label="Tipo de Usuário"
-            [options]="[
-                { value: 'USER', label: 'Usuário' },
-                { value: 'ADMIN', label: 'Administrador' }
-            ]"
+            formControlName="status"
+            label="Status"
+            [options]="statusOptions"
+        ></app-primary-select>
+
+
+        <!-- colaborador -->
+        <div class="error" *ngIf="signupForm.controls['colaboradorId'].touched && signupForm.controls['colaboradorId'].invalid">
+        <span>Selecione um responsável.</span>
+        </div>
+         <app-primary-select
+            formControlName="colaboradorId"
+            label="Responsável"
+            [options]="colaboradoresOptions"
         ></app-primary-select>
         <!-- role -->
 
-        <div class="error" *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid">
-            <span *ngIf="signupForm.controls.password.errors?.['required']">Senha é obrigatória.</span>
-            <span *ngIf="signupForm.controls.password.errors?.['minlength']">Use pelo menos 6 caracteres.</span>
-        </div>
-        <app-primary-input
-            formControlName="password"
-            inputName="password"
-            type="password"
-            label="Senha"
-        >
-            <img src="/assets/svg/password-icon.svg">
-        </app-primary-input>
-        
 
-        <div class="error" *ngIf="passwordMismatch">
-            <span>As senhas não são iguais.</span>
-        </div>
-        <app-primary-input
-            formControlName="passwordConfirm"
-            inputName="passwordConfirm"
-            type="password"
-            label="Confirme a senha"
-        >
-            <img src="/assets/svg/password-icon.svg">
-        </app-primary-input>
-
-        <p>CKEditor</p>
-        <ckeditor [editor]="Editor" data="<p>hello</p>"> </ckeditor>
+        <!-- <p>CKEditor</p>
+        <ckeditor [editor]="Editor" data="<p>hello</p>"> </ckeditor> -->
         
     </form>
