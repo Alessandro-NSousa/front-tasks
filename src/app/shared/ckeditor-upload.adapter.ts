@@ -1,8 +1,6 @@
 export class CkeditorUploadAdapter {
 
-  constructor(
-    private loader: any
-  ) {}
+  constructor(private loader: any) {}
 
   upload(): Promise<{ default: string }> {
     return this.loader.file.then((file: File) => {
@@ -11,14 +9,24 @@ export class CkeditorUploadAdapter {
         const formData = new FormData();
         formData.append('file', file);
 
+        const token = sessionStorage.getItem('auth-token');
+
         fetch('http://localhost:8080/api/uploads', {
           method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
           body: formData
         })
-          .then(response => response.json())
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Erro no upload');
+            }
+            return response.json();
+          })
           .then(result => {
             resolve({
-              default: result.url // URL pública da imagem
+              default: result.url
             });
           })
           .catch(error => reject(error));
@@ -26,7 +34,5 @@ export class CkeditorUploadAdapter {
     });
   }
 
-  abort() {
-    // opcional
-  }
+  abort() {}
 }

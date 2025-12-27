@@ -32,12 +32,10 @@ export class TarefasService {
   }
 
   cadastrarTarefa(payload: CadastrarTarefaRequest): Observable<void> {
-    console.log("post: ", payload);
     return this.http.post<void>(this.apiUrl, payload);
   }
 
   cadastrarUsuario(dto: TarefaDTO): Observable<void> {
-    console.log("dados: ", dto)
     return this.http.post<void>(this.apiUrl, dto);
   }
 }
