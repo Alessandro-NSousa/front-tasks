@@ -41,7 +41,9 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/ckeditor/ckeditor.js"
+            ]
           },
           "configurations": {
             "production": {

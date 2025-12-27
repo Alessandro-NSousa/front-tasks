@@ -21,30 +21,31 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  loginForm!: FormGroup;
+  loginForm = new FormGroup({
+    email: new FormControl<string>('', { validators: [Validators.required, Validators.email], nonNullable: true }),
+    password: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(6)], nonNullable: true })
+  });
 
   constructor(
     private router: Router,
     private loginService: LoginService,
     private toastrService: ToastrService
-  ){
-    this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  ) {}
+
+  submit() {
+    const { email, password } = this.loginForm.value;
+
+    this.loginService.login(email!, password!).subscribe({
+      next: () => {
+        this.toastrService.success("Login feito com sucesso!");
+        this.router.navigate(['/tarefa/list']);
+      },
+      error: () =>
+        this.toastrService.error("Erro inesperado, tente novamente mais tarde!")
     });
   }
 
-  submit(){
-    this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe( {
-      next: () => {
-      this.toastrService.success("Login feito com sucesso!");
-      this.router.navigate(['/tarefa/list']);
-    },
-      error: () => this.toastrService.error("Erro inesperado, Tente novamente mais tarde!")
-    })
-  }
-
-  navigate(){
+  navigate() {
     this.router.navigate(["/signup"]);
   }
 

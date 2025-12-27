@@ -1,11 +1,25 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 
 type InputTypes = "text" | "email" | "password"
 
 @Component({
   selector: 'app-primary-input',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    CommonModule
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,27 +30,28 @@ type InputTypes = "text" | "email" | "password"
   templateUrl: './primary-input.component.html',
   styleUrl: './primary-input.component.scss'
 })
-export class PrimaryInputComponent {
-  @Input() type: InputTypes = "text";
-  @Input() inputName: string = "";
-  @Input() placeholder: string = "";
-  @Input() label: string = "";
+export class PrimaryInputComponent implements ControlValueAccessor {
+  @Input() label?: string;
+  @Input() placeholder: string = '';
+  @Input() type: string = 'text';
+  @Input() icon?: string;      // mat-icon name or null
+  @Input() select?: boolean;   // caso precise suportar select dentro do mesmo componente (opcional)
+  @Input() options?: Array<{ value: any; label: string }>;
 
-  value: string = ''
-  onChange: any = () =>{}
-  onTouched: any = () => {}
+  value: any = '';
+  disabled = false;
 
-  onInput(event: Event) {
-    const value = (event.target as HTMLInputElement).value
-    this.onChange(value)
-  }
+  // funções que serão registradas pelo Angular
+  private onChange: (value: any) => void = () => {};
+  private onTouched: () => void = () => {};
 
-  writeValue(value: any): void {
-    this.value = value
+  // ControlValueAccessor
+  writeValue(obj: any): void {
+    this.value = obj ?? '';
   }
 
   registerOnChange(fn: any): void {
-      this.onChange = fn;
+    this.onChange = fn;
   }
 
   registerOnTouched(fn: any): void {
@@ -44,6 +59,16 @@ export class PrimaryInputComponent {
   }
 
   setDisabledState(isDisabled: boolean): void {
-      this.onTouched = () => {}
+    this.disabled = isDisabled;
+  }
+
+  // handlers na view
+  handleInput(value: any) {
+    this.value = value;
+    this.onChange(this.value);
+  }
+
+  handleBlur() {
+    this.onTouched();
   }
 }
