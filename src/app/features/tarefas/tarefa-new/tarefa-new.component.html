@@ -1,51 +1,71 @@
-<form [formGroup]="signupForm">
+<form [formGroup]="signupForm" (ngSubmit)="salvar()" class="tarefa-form">
 
-        <div class="error" *ngIf="signupForm.controls['titulo'].touched && signupForm.controls['titulo'].invalid">
-            <span *ngIf="signupForm.controls['titulo'].errors?.['required']">Título é obrigatório.</span>
-            <span *ngIf="signupForm.controls['titulo'].errors?.['minlength']">Use pelo menos 3 caracteres.</span>
-        </div>
-        <app-primary-input
-            formControlName="titulo"
-            inputName="titulo"
-            type="text"
-            label="Título"
-        >   
-        </app-primary-input>
-        
-        <!-- descrição -->
-         <div class="error" *ngIf="signupForm.controls['descricao'].touched && signupForm.controls['descricao'].invalid"></div>
-        <app-primary-input
-            formControlName="descricao"
-            inputName="descricao"
-            type="text"
-            label="Email"
-        >
-        </app-primary-input>
+  <!-- TÍTULO -->
+  <app-primary-input
+    formControlName="titulo"
+    inputName="titulo"
+    type="text"
+    label="Título">
+  </app-primary-input>
 
-        <!-- status -->
-        <div class="error" *ngIf="signupForm.controls['status'].touched && signupForm.controls['status'].invalid">
-        <span>Selecione o Status da tarefa.</span>
-        </div>
-         <app-primary-select
-            formControlName="status"
-            label="Status"
-            [options]="statusOptions"
-        ></app-primary-select>
+  <small class="text-danger"
+    *ngIf="signupForm.controls['titulo'].touched && signupForm.controls['titulo'].invalid">
+    Título obrigatório (mín. 3 caracteres)
+  </small>
 
+  <!-- DESCRIÇÃO -->
+  <div class="mt-3">
+    <label class="form-label">Descrição</label>
 
-        <!-- colaborador -->
-        <div class="error" *ngIf="signupForm.controls['colaboradorId'].touched && signupForm.controls['colaboradorId'].invalid">
-        <span>Selecione um responsável.</span>
-        </div>
-         <app-primary-select
-            formControlName="colaboradorId"
-            label="Responsável"
-            [options]="colaboradoresOptions"
-        ></app-primary-select>
-        <!-- role -->
+    <div
+      #editor
+      class="ckeditor"
+      [class.is-invalid]="signupForm.controls['descricao'].touched && signupForm.controls['descricao'].invalid">
+    </div>
 
+    <small class="text-danger"
+      *ngIf="signupForm.controls['descricao'].touched && signupForm.controls['descricao'].invalid">
+      Descrição obrigatória
+    </small>
+  </div>
 
-        <!-- <p>CKEditor</p>
-        <ckeditor [editor]="Editor" data="<p>hello</p>"> </ckeditor> -->
-        
-    </form>
+  <!-- STATUS -->
+  <div class="mt-3">
+    <app-primary-select
+      formControlName="status"
+      label="Status"
+      [options]="statusOptions">
+    </app-primary-select>
+
+    <small class="text-danger"
+      *ngIf="signupForm.controls['status'].touched && signupForm.controls['status'].invalid">
+      Selecione um status
+    </small>
+  </div>
+
+  <!-- RESPONSÁVEL -->
+  <div class="mt-3">
+    <app-primary-select
+      formControlName="colaboradorId"
+      label="Responsável"
+      [options]="colaboradoresOptions">
+    </app-primary-select>
+
+    <small class="text-danger"
+      *ngIf="signupForm.controls['colaboradorId'].touched && signupForm.controls['colaboradorId'].invalid">
+      Selecione um responsável
+    </small>
+  </div>
+
+  <!-- BOTÃO -->
+  <div class="mt-4 d-flex justify-content-end">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="signupForm.invalid">
+      Salvar tarefa
+    </button>
+  </div>
+
+</form>

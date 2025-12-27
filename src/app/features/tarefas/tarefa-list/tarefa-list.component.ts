@@ -16,7 +16,7 @@ import { Tarefa } from '../tarefa';
   styleUrl: './tarefa-list.component.scss'
 })
 export class TarefaListComponent {
-  displayedColumns: string[] = ['id', 'titulo', 'descricao', 'status', 'criacao', 'colaborador'];
+  displayedColumns: string[] = ['id', 'titulo', 'status', 'criacao', 'colaborador'];
  
   dataSource = new MatTableDataSource<Tarefa>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;

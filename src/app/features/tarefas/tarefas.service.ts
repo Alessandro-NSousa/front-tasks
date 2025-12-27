@@ -12,6 +12,13 @@ export interface TarefaDTO {
   colaborador: string;
 }
 
+export interface CadastrarTarefaRequest {
+  titulo: string;
+  descricao: string;
+  status: string;
+  colaboradorId: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,6 +29,11 @@ export class TarefasService {
   
   listarTarefas(): Observable<{ content: Tarefa[] }> {
     return this.http.get<{ content: Tarefa[] }>(this.apiUrl);
+  }
+
+  cadastrarTarefa(payload: CadastrarTarefaRequest): Observable<void> {
+    console.log("post: ", payload);
+    return this.http.post<void>(this.apiUrl, payload);
   }
 
   cadastrarUsuario(dto: TarefaDTO): Observable<void> {
