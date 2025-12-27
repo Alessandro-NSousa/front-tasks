@@ -19,6 +19,13 @@ export interface UserRequestDTO {
   senha: string
 }
 
+export interface UserResponseDto {
+  id: string;
+  nome: string;
+  email: string;
+  ativo: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,10 +51,11 @@ export class UsersService {
     );
   }
 
-
   cadastrarUsuario(dto: UserRequestDTO): Observable<void> {
     console.log("dados: ", dto)
     return this.http.post<void>(`${this.apiUrl}/auth/register`, dto);
   }
+
+  
   
 }

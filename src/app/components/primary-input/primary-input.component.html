@@ -1,4 +1,4 @@
-<div class="input-wrapper">
+<!-- <div class="input-wrapper">
     <label [for]="inputName">{{label}}</label>
     <div class="input-content">
         <input [type]="type" 
@@ -11,4 +11,47 @@
         </div>
     </div>
     
-</div>
+</div> -->
+
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label *ngIf="label">{{ label }}</mat-label>
+
+  <!-- INPUT PADRÃO -->
+  <input
+    *ngIf="!select"
+    matInput
+    [type]="type"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="handleInput($any($event.target).value)"
+    (blur)="handleBlur()"
+    [disabled]="disabled"
+  />
+
+  <!-- SELECT (opcional: se você preferir separar, implemente um PrimarySelectComponent) -->
+  <mat-select
+    *ngIf="select"
+    [value]="value"
+    (selectionChange)="handleInput($event.value)"
+    (blur)="handleBlur()"
+    [disabled]="disabled"
+  >
+    <mat-option *ngFor="let opt of options" [value]="opt.value">
+      {{ opt.label }}
+    </mat-option>
+  </mat-select>
+
+  <button
+    mat-icon-button
+    matSuffix
+    *ngIf="icon"
+    type="button"
+    [disabled]="disabled"
+  >
+    <mat-icon class="primaryIcon">{{ icon }}</mat-icon>
+  </button>
+
+  <mat-error *ngIf="false">
+    <!-- Erros exibidos no formulário pai -->
+  </mat-error>
+</mat-form-field>
