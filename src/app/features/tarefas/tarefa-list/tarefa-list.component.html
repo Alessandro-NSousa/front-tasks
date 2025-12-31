@@ -41,6 +41,31 @@
             <td mat-cell *matCellDef="let element"> {{element.colaborador}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="acoes">
+            <th mat-header-cell *matHeaderCellDef class="text-center"> Ações</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+
+                <!-- Visualizar -->
+                <button mat-icon-button
+                    (click)="visualizar(element.id)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+
+                <!-- Editar -->
+                <button mat-icon-button
+                        [routerLink]="['/tarefa/edit', element.id]">
+                <mat-icon>edit</mat-icon>
+                </button>
+
+                <!-- Excluir -->
+                <button mat-icon-button
+                        (click)="excluir(element.id)">
+                <mat-icon>delete</mat-icon>
+                </button>
+
+            </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>

@@ -1,0 +1,35 @@
+<mat-toolbar class="dialog-toolbar">
+  <span class="title">{{ tarefa?.titulo }}</span>
+  <span class="spacer"></span>
+
+  <button mat-icon-button (click)="toggleExpandir()">
+    <mat-icon>
+      {{ expandido ? 'fullscreen_exit' : 'fullscreen' }}
+    </mat-icon>
+  </button>
+
+  <button mat-icon-button (click)="fechar()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-dialog-content *ngIf="tarefa" class="dialog-content">
+  <div class="meta">
+    <span><strong>Status:</strong> {{ tarefa.status }}</span>
+  </div>
+  <div class="meta">
+    <span><strong>Responsável:</strong> {{ tarefa.colaborador }}</span>
+    
+  </div>
+  <div class="meta">
+    
+    <span><strong>Data:</strong> {{ tarefa.criacao | date:'dd/MM/yyyy' }}</span>
+  </div>
+
+
+  <mat-divider></mat-divider>
+
+  <div class="ck-content descricao"
+       [innerHTML]="descricaoSanitizada">
+  </div>
+</mat-dialog-content>
