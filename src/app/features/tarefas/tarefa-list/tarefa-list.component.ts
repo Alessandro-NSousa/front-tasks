@@ -6,8 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 import { TarefasService } from '../tarefas.service';
 import { Tarefa } from '../tarefa';
+import { TarefaViewDialogComponent } from '../tarefa-view-dialog/tarefa-view-dialog.component';
 
 @Component({
   selector: 'app-tarefa-list',
@@ -16,12 +18,12 @@ import { Tarefa } from '../tarefa';
   styleUrl: './tarefa-list.component.scss'
 })
 export class TarefaListComponent {
-  displayedColumns: string[] = ['id', 'titulo', 'status', 'criacao', 'colaborador'];
+  displayedColumns: string[] = ['id', 'titulo', 'status', 'criacao', 'colaborador', 'acoes'];
  
   dataSource = new MatTableDataSource<Tarefa>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private tarefaService: TarefasService) { }
+  constructor(private tarefaService: TarefasService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.carregarTarefas();
@@ -40,6 +42,27 @@ export class TarefaListComponent {
       error: (err) => {
         console.error('Erro ao carregar tarefas:', err);
       }
+    });
+  }
+
+  excluir(id: number): void {
+  if (confirm('Deseja realmente excluir esta tarefa?')) {
+    this.tarefaService.excluir(id).subscribe({
+      next: () => {
+        this.carregarTarefas();
+      },
+      error: () => {
+        alert('Erro ao excluir a tarefa');
+      }
+    });
+  }
+  }
+  
+  visualizar(id: string): void {
+    this.dialog.open(TarefaViewDialogComponent, {
+      width: '800px',
+      maxWidth: '95vw',
+      data: { id }
     });
   }
 

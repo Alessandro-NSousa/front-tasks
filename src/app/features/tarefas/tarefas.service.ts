@@ -38,4 +38,12 @@ export class TarefasService {
   cadastrarUsuario(dto: TarefaDTO): Observable<void> {
     return this.http.post<void>(this.apiUrl, dto);
   }
+
+  excluir(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  buscarPorId(id: string): Observable<void> {
+    return this.http.get<void>(`${this.apiUrl}/${id}`);
+  }
 }
