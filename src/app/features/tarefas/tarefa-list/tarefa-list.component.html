@@ -48,19 +48,19 @@
                 <!-- Visualizar -->
                 <button mat-icon-button
                     (click)="visualizar(element.id)">
-                    <mat-icon>visibility</mat-icon>
+                    <mat-icon class="primaryIcon">visibility</mat-icon>
                 </button>
 
                 <!-- Editar -->
                 <button mat-icon-button
                         [routerLink]="['/tarefa/edit', element.id]">
-                <mat-icon>edit</mat-icon>
+                <mat-icon class="secondaryIcon">edit</mat-icon>
                 </button>
 
                 <!-- Excluir -->
                 <button mat-icon-button
                         (click)="excluir(element.id)">
-                <mat-icon>delete</mat-icon>
+                <mat-icon class="dangerIcon">delete</mat-icon>
                 </button>
 
             </td>

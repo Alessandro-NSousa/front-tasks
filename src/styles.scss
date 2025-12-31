@@ -1,19 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@use './styles/variables.scss' as *;
 @use 'ngx-toastr/toastr' as *;
+@import 'bootstrap/scss/bootstrap';
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 html, body {
     height: 100%;
 }
 
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
 .mat-mdc-header-cell,
 .mat-header-cell {
   font-weight: 700 !important;
@@ -37,5 +36,18 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 1000px #fff inset !important;
   -webkit-text-fill-color: #000 !important;
   transition: background-color 9999s ease-in-out 0s;
+}
+
+
+.primaryIcon{
+    color: $primary-color;
+}
+
+.dangerIcon{
+    color: $danger-color;
+}
+
+.secondaryIcon{
+    color: $secondary-color;
 }
 

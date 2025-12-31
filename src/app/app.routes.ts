@@ -39,7 +39,7 @@ export const routes: Routes = [
         canActivate: [AuthGuardService]
     },
     {
-        path: 'tarefa/edit',
+        path: 'tarefa/edit/:id',
         component: TarefaEditComponent,
         canActivate: [AuthGuardService]
     },

@@ -46,4 +46,8 @@ export class TarefasService {
   buscarPorId(id: string): Observable<void> {
     return this.http.get<void>(`${this.apiUrl}/${id}`);
   }
+
+  alterarTarefa(id: string, payload: CadastrarTarefaRequest): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}`, payload);
+  }
 }
