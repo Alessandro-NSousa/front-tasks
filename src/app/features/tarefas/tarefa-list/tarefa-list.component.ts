@@ -5,7 +5,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { TarefasService } from '../tarefas.service';
 import { Tarefa } from '../tarefa';
@@ -13,7 +13,15 @@ import { TarefaViewDialogComponent } from '../tarefa-view-dialog/tarefa-view-dia
 
 @Component({
   selector: 'app-tarefa-list',
-  imports: [MatTableModule, MatPaginatorModule, DatePipe, MatCheckboxModule,MatButtonModule, MatIconModule, RouterModule],
+  imports: [MatTableModule,
+    MatPaginatorModule,
+    DatePipe,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule,
+    CommonModule
+  ],
   templateUrl: './tarefa-list.component.html',
   styleUrl: './tarefa-list.component.scss'
 })

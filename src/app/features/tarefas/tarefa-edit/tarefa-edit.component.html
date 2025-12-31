@@ -1,1 +1,11 @@
-<p>tarefa-edit works!</p>
+<h2>Editar Tarefa</h2>
+
+<div *ngIf="tarefa; else carregando">
+  <p><strong>ID:</strong> {{ tarefa.id }}</p>
+  <p><strong>Título:</strong> {{ tarefa.titulo }}</p>
+  <p><strong>Status:</strong> {{ tarefa.status }}</p>
+</div>
+
+<ng-template #carregando>
+  <p>Carregando tarefa...</p>
+</ng-template>
