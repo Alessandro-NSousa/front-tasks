@@ -1,0 +1,51 @@
+.tarefa-card {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 8px;
+}
+
+.tarefa-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-section {
+  margin-bottom: 20px;
+}
+
+.section-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.ckeditor-container {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-height: 200px;
+  padding: 4px;
+
+  &.is-invalid {
+    border-color: #d32f2f;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 4px;
+}

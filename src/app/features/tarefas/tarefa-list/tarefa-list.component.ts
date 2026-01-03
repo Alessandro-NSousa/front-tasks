@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TarefasService } from '../tarefas.service';
 import { Tarefa } from '../tarefa';
 import { TarefaViewDialogComponent } from '../tarefa-view-dialog/tarefa-view-dialog.component';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-tarefa-list',
@@ -20,18 +22,28 @@ import { TarefaViewDialogComponent } from '../tarefa-view-dialog/tarefa-view-dia
     MatButtonModule,
     MatIconModule,
     RouterModule,
-    CommonModule
+    CommonModule,
+    ConfirmDialogComponent
   ],
   templateUrl: './tarefa-list.component.html',
   styleUrl: './tarefa-list.component.scss'
 })
 export class TarefaListComponent {
   displayedColumns: string[] = ['id', 'titulo', 'status', 'criacao', 'colaborador', 'acoes'];
+  statusOptions = [
+    { value: 'PENDENTE', label: 'Pendente' },
+    { value: 'ANDAMENTO', label: 'Em andamento' },
+    { value: 'CONCLUIDO', label: 'Concluída' }
+  ];
  
   dataSource = new MatTableDataSource<Tarefa>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private tarefaService: TarefasService, private dialog: MatDialog) { }
+  constructor(
+    private tarefaService: TarefasService,
+    private dialog: MatDialog,
+    private toatrService: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.carregarTarefas();
@@ -54,16 +66,33 @@ export class TarefaListComponent {
   }
 
   excluir(id: number): void {
-  if (confirm('Deseja realmente excluir esta tarefa?')) {
-    this.tarefaService.excluir(id).subscribe({
-      next: () => {
-        this.carregarTarefas();
-      },
-      error: () => {
-        alert('Erro ao excluir a tarefa');
-      }
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    width: '400px',
+    data: {
+      titulo: 'Excluir tarefa',
+      mensagem: 'Tem certeza que deseja excluir esta tarefa?'
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(confirmado => {
+    if (!confirmado) return;
+
+      this.tarefaService.excluir(id).subscribe({
+        next: () => {
+          this.toatrService.success(
+            'Tarefa excluída com sucesso!',
+            'Sucesso'
+          );
+          this.carregarTarefas();
+        },
+        error: () => {
+          this.toatrService.error(
+            'Não foi possível excluir a tarefa.',
+            'Erro'
+          );
+        }
+      });
     });
-  }
   }
   
   visualizar(id: string): void {
@@ -72,6 +101,26 @@ export class TarefaListComponent {
       maxWidth: '95vw',
       data: { id }
     });
+  }
+
+  getStatusLabel(status: string): string {
+    return (
+      this.statusOptions.find(s => s.value === status)?.label
+      ?? status
+    );
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'PENDENTE':
+        return 'dangerIcon';
+      case 'ANDAMENTO':
+        return 'primaryIcon';
+      case 'CONCLUIDO':
+        return 'doneIcon';
+      default:
+        return 'secondaryIcon';
+    }
   }
 
 }

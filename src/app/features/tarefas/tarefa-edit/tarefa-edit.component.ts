@@ -10,6 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatDivider } from '@angular/material/divider';
+import { MatIcon } from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import { ToastrService } from 'ngx-toastr';
 
 declare const ClassicEditor: any;
 
@@ -27,7 +31,10 @@ interface EditForm {
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatDivider,
+    MatIcon,
+    MatCardModule
   ],
   templateUrl: './tarefa-edit.component.html',
   styleUrl: './tarefa-edit.component.scss'
@@ -44,7 +51,7 @@ export class TarefaEditComponent implements OnInit, AfterViewInit {
   statusOptions = [
     { value: 'PENDENTE', label: 'Pendente' },
     { value: 'ANDAMENTO', label: 'Em andamento' },
-    { value: 'CONCLUIDA', label: 'Concluída' }
+    { value: 'CONCLUIDO', label: 'Concluída' }
   ];
 
   constructor(
@@ -52,7 +59,8 @@ export class TarefaEditComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private tarefasService: TarefasService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -97,19 +105,20 @@ export class TarefaEditComponent implements OnInit, AfterViewInit {
   }
 
    carregarTarefa(): void {
-     this.tarefasService.buscarPorId(this.tarefaId).subscribe(tarefa => {
-       this.form.patchValue({
-         titulo: tarefa.titulo,
-         descricao: tarefa.descricao,
-         status: tarefa.status,
-         colaboradorId: String(tarefa.colaborador)
-       });
+    this.tarefasService.buscarPorId(this.tarefaId).subscribe(tarefa => {
 
-       // Se o editor já existir, seta o HTML
-       if (this.editorInstance) {
-         this.editorInstance.setData(tarefa.descricao);
-       }
-     });
+      this.form.patchValue({
+        titulo: tarefa.titulo,
+        descricao: tarefa.descricao,
+        status: tarefa.status,
+        colaboradorId: tarefa.colaborador?.id ?? null
+      });
+
+      // Atualiza o CKEditor se já estiver inicializado
+      if (this.editorInstance) {
+        this.editorInstance.setData(tarefa.descricao);
+      }
+    });
   }
 
   salvar(): void {
@@ -126,13 +135,19 @@ export class TarefaEditComponent implements OnInit, AfterViewInit {
   };
 
   this.tarefasService.editarTarefa(this.tarefaId, payload).subscribe({
-    next: () => this.router.navigate(['/tarefas']),
+    next: () => {
+      this.router.navigate(['/tarefa/list']);
+      this.toastr.success(
+            'Alterações realizadas com sucesso!',
+            'Sucesso'
+          );
+     },
     error: err => console.error('Erro ao atualizar tarefa', err)
     });
   }
 
   cancelar(): void {
-    this.router.navigate(['/tarefas']);
+    this.router.navigate(['/tarefa/list']);
   }
 
 }

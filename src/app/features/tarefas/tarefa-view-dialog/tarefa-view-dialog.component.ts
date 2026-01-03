@@ -30,6 +30,12 @@ export class TarefaViewDialogComponent {
   descricaoSanitizada!: SafeHtml;
   expandido = false;
 
+  statusOptions = [
+    { value: 'PENDENTE', label: 'Pendente' },
+    { value: 'ANDAMENTO', label: 'Em andamento' },
+    { value: 'CONCLUIDO', label: 'Concluída' }
+  ];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: string },
     private dialogRef: MatDialogRef<TarefaViewDialogComponent>,
@@ -59,4 +65,28 @@ export class TarefaViewDialogComponent {
   fechar(): void {
     this.dialogRef.close();
   }
+
+  getStatusLabel(status: string): string {
+    return (
+      this.statusOptions.find(s => s.value === status)?.label
+      ?? status
+    );
+  }
+  
+  getStatusClass(status: string): string {
+  switch (status) {
+    case 'PENDENTE':
+      return 'dangerIcon';
+    case 'ANDAMENTO':
+      return 'primaryIcon';
+    case 'CONCLUIDO':
+      return 'doneIcon';
+    default:
+      return 'secondaryIcon';
+  }
+}
+
+
+
+
 }
