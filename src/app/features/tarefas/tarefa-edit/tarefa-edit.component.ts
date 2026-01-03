@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import { ToastrService } from 'ngx-toastr';
 
 declare const ClassicEditor: any;
 
@@ -58,7 +59,8 @@ export class TarefaEditComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private tarefasService: TarefasService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -133,7 +135,13 @@ export class TarefaEditComponent implements OnInit, AfterViewInit {
   };
 
   this.tarefasService.editarTarefa(this.tarefaId, payload).subscribe({
-    next: () => this.router.navigate(['/tarefa/list']),
+    next: () => {
+      this.router.navigate(['/tarefa/list']);
+      this.toastr.success(
+            'Alterações realizadas com sucesso!',
+            'Sucesso'
+          );
+     },
     error: err => console.error('Erro ao atualizar tarefa', err)
     });
   }

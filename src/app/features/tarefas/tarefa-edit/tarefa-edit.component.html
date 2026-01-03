@@ -62,6 +62,7 @@
       mat-stroked-button
       color="primary"
       (click)="cancelar()">
+      <mat-icon>block</mat-icon>
       Cancelar
     </button>
 
@@ -70,7 +71,8 @@
       color="primary"
       [disabled]="form.invalid"
       (click)="salvar()">
-      Salvar alterações
+      <mat-icon>save</mat-icon>
+      Salvar
     </button>
   </div>
 

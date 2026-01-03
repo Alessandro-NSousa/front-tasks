@@ -110,4 +110,17 @@ export class TarefaListComponent {
     );
   }
 
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'PENDENTE':
+        return 'dangerIcon';
+      case 'ANDAMENTO':
+        return 'primaryIcon';
+      case 'CONCLUIDO':
+        return 'doneIcon';
+      default:
+        return 'secondaryIcon';
+    }
+  }
+
 }

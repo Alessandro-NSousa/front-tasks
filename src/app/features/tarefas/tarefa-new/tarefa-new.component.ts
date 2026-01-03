@@ -11,6 +11,10 @@ import { map } from 'rxjs';
 import type { Editor } from '@ckeditor/ckeditor5-core';
 import { CkeditorUploadAdapter } from '../../../shared/ckeditor-upload.adapter';
 import { TarefasService } from '../tarefas.service';
+import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
 
 interface SignupForm {
   titulo: FormControl<string | null>;
@@ -30,7 +34,9 @@ declare const ClassicEditor: any;
     CommonModule,
     MatFormFieldModule,
     MatSelectModule,
-    PrimarySelectComponent
+    MatCardModule,
+    PrimarySelectComponent,
+    MatIconModule
   ],
   templateUrl: './tarefa-new.component.html',
   styleUrl: './tarefa-new.component.scss'
@@ -52,7 +58,10 @@ export class TarefaNewComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private userService: UsersService,
-    private tarefasService: TarefasService
+    private tarefasService: TarefasService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -115,8 +124,17 @@ export class TarefaNewComponent implements OnInit, AfterViewInit {
       next: () => {
         this.signupForm.reset();
         this.editorInstance.setData('');
+        this.router.navigate(['/tarefa/list'])
+        this.toastr.success(
+            'Tarefa cadastrada com sucesso!',
+            'Sucesso'
+          );
       },
       error: err => console.error(err)
     });
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/tarefa/list']);
   }
 }
