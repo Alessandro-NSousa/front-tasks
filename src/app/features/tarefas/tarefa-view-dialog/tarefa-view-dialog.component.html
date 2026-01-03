@@ -1,35 +1,57 @@
 <mat-toolbar class="dialog-toolbar">
-  <span class="title">{{ tarefa?.titulo }}</span>
+  <div class="toolbar-left">
+    <h2 class="title">{{ tarefa?.titulo }}</h2>
+  </div>
+
   <span class="spacer"></span>
 
-  <button mat-icon-button (click)="toggleExpandir()">
-    <mat-icon>
-      {{ expandido ? 'fullscreen_exit' : 'fullscreen' }}
-    </mat-icon>
-  </button>
+  <div class="toolbar-actions">
+    <button
+      mat-icon-button
+      matTooltip="Expandir"
+      (click)="toggleExpandir()">
+      <mat-icon>
+        {{ expandido ? 'fullscreen_exit' : 'fullscreen' }}
+      </mat-icon>
+    </button>
 
-  <button mat-icon-button (click)="fechar()">
-    <mat-icon>close</mat-icon>
-  </button>
+    <button
+      mat-icon-button
+      matTooltip="Fechar"
+      (click)="fechar()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
 <mat-dialog-content *ngIf="tarefa" class="dialog-content">
-  <div class="meta">
-    <span><strong>Status:</strong> {{ tarefa.status }}</span>
-  </div>
-  <div class="meta">
-    <span><strong>Responsável:</strong> {{ tarefa.colaborador }}</span>
-    
-  </div>
-  <div class="meta">
-    
-    <span><strong>Data:</strong> {{ tarefa.criacao | date:'dd/MM/yyyy' }}</span>
+
+  <!-- Metadados -->
+  <div class="meta-container">
+    <div class="meta-item">
+    <mat-icon [ngClass]="getStatusClass(tarefa.status)">flag</mat-icon>
+    <span>{{ getStatusLabel(tarefa.status) }}</span>
   </div>
 
+    <div class="meta-item">
+      <mat-icon class="primaryIcon">person</mat-icon>
+      <span>{{ tarefa.colaborador?.nome }}</span>
+    </div>
+
+    <div class="meta-item">
+      <mat-icon class="primaryIcon">calendar_today</mat-icon>
+      <span>{{ tarefa.criacao | date:'dd/MM/yyyy' }}</span>
+    </div>
+  </div>
 
   <mat-divider></mat-divider>
 
-  <div class="ck-content descricao"
-       [innerHTML]="descricaoSanitizada">
+  <!-- Conteúdo -->
+  <div class="descricao-wrapper">
+    <div
+      class="ck-content descricao"
+      [innerHTML]="descricaoSanitizada">
+    </div>
   </div>
+
 </mat-dialog-content>

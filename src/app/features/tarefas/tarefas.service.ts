@@ -55,6 +55,7 @@ export class TarefasService {
   }
 
   editarTarefa(tarefaId: string, payload: EditarTarefaRequest): Observable<void> {
+    console.log("dados: ", payload)
     return this.http.put<void>(`${this.apiUrl}/${tarefaId}`, payload);
   }
 }

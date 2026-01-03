@@ -1,41 +1,77 @@
-<h3>Editar Tarefa</h3>
+<mat-card class="edit-card">
 
-<form [formGroup]="form" class="form">
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h2>Editar tarefa</h2>
+      <p class="subtitle">Atualize as informações da tarefa</p>
+    </div>
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Título</mat-label>
-    <input matInput formControlName="titulo" />
-  </mat-form-field>
+    <button
+      mat-icon-button
+      color="warn"
+      aria-label="Cancelar edição"
+      (click)="cancelar()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-  <!-- CKEditor -->
-  <label class="mb-1">Descrição</label>
-  <div #editor class="editor-container"></div>
+  <mat-divider></mat-divider>
 
-  <mat-form-field appearance="outline" class="w-100 mt-3">
-    <mat-label>Status</mat-label>
-    <mat-select formControlName="status">
-      <mat-option *ngFor="let s of statusOptions" [value]="s.value">
-        {{ s.label }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <!-- Form -->
+  <form [formGroup]="form" class="form">
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Colaborador</mat-label>
-    <mat-select formControlName="colaboradorId">
-      <mat-option *ngFor="let c of colaboradoresOptions" [value]="c.value">
-        {{ c.label }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="titulo" />
+    </mat-form-field>
 
-  <div class="actions mt-4">
-    <button mat-stroked-button color="primary" (click)="cancelar()" type="button">
+    <!-- Descrição -->
+    <section class="editor-section">
+      <label class="editor-label">Descrição</label>
+      <div #editor class="editor-container"></div>
+    </section>
+
+    <div class="grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let s of statusOptions" [value]="s.value">
+            {{ s.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Responsável</mat-label>
+        <mat-select formControlName="colaboradorId">
+          <mat-option *ngFor="let c of colaboradoresOptions" [value]="c.value">
+            {{ c.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </form>
+
+  <mat-divider></mat-divider>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="cancelar()">
       Cancelar
     </button>
 
-    <button mat-flat-button color="primary" (click)="salvar()" type="button">
-      Salvar Alterações
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="form.invalid"
+      (click)="salvar()">
+      Salvar alterações
     </button>
   </div>
-</form>
+
+</mat-card>
