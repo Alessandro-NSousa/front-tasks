@@ -19,6 +19,13 @@ export interface CadastrarTarefaRequest {
   colaboradorId: string;
 }
 
+export interface EditarTarefaRequest {
+  titulo: string;
+  descricao: string;
+  status: string;
+  colaboradorId: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,11 +50,11 @@ export class TarefasService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  buscarPorId(id: string): Observable<void> {
-    return this.http.get<void>(`${this.apiUrl}/${id}`);
+  buscarPorId(id: string): Observable<Tarefa> {
+    return this.http.get<Tarefa>(`${this.apiUrl}/${id}`);
   }
 
-  alterarTarefa(id: string, payload: CadastrarTarefaRequest): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, payload);
+  editarTarefa(tarefaId: string, payload: EditarTarefaRequest): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${tarefaId}`, payload);
   }
 }
