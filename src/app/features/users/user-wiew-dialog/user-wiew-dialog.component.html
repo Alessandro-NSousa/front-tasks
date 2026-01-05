@@ -1,0 +1,49 @@
+<mat-toolbar class="dialog-toolbar">
+  <div class="toolbar-left">
+    <h2 class="title">{{ user?.nome }}</h2>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="toolbar-actions">
+    <button
+      mat-icon-button
+      matTooltip="Expandir"
+      (click)="toggleExpandir()">
+      <mat-icon>
+        {{ expandido ? 'fullscreen_exit' : 'fullscreen' }}
+      </mat-icon>
+    </button>
+
+    <button
+      mat-icon-button
+      matTooltip="Fechar"
+      (click)="fechar()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-dialog-content *ngIf="user" class="dialog-content">
+
+  <!-- Metadados -->
+  <div class="meta-container">
+    
+
+    <div class="meta-item">
+      <mat-icon class="primaryIcon">person</mat-icon>
+      <span>{{ user.email }}</span>
+    </div>
+
+    <div class="meta-item">
+    <mat-icon [ngClass]="getRoleClass(user.role)">flag</mat-icon>
+    <span>{{ getRoleLabel(user.role) }}</span>
+  </div>
+
+  </div>
+
+  <mat-divider></mat-divider>
+
+  
+
+</mat-dialog-content>

@@ -56,6 +56,13 @@ export class UsersService {
     return this.http.post<void>(`${this.apiUrl}/auth/register`, dto);
   }
 
+  excluirUsuario(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/auth/${id}`);
+  }
+  buscarUserPorId(id: string): Observable<User> {
+      return this.http.get<User>(`${this.apiUrl}/auth/${id}`);
+    }
+
   
   
 }
