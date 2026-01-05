@@ -8,22 +8,29 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UserFormDialogComponent } from '../../../components/user-form-dialog/user-form-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { TarefaViewDialogComponent } from '../../tarefas/tarefa-view-dialog/tarefa-view-dialog.component';
+import { UserWiewDialogComponent } from '../user-wiew-dialog/user-wiew-dialog.component';
 
 @Component({
   selector: 'app-user-list',
   imports: [MatTableModule, MatPaginatorModule,
     DatePipe, MatCheckboxModule,
     MatIconModule, RouterModule,
-    MatButtonModule, MatDialogModule, MatSortModule],
+    MatButtonModule, MatDialogModule, MatSortModule, NgClass],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })
 export class UserListComponent {
-  displayedColumns: string[] = ['id', 'nome', 'email', 'role', 'ativo'];
+  displayedColumns: string[] = ['id', 'nome', 'email', 'role', 'acoes'];
+  roleOptions = [
+    { value: 'ADMIN', label: 'Administrador' },
+    { value: 'USER', label: 'Usuário' }
+  ];
  
   dataSource = new MatTableDataSource<User>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -92,5 +99,49 @@ export class UserListComponent {
         error: () => this.toastr.error("Erro ao criar usuário.")
       });
   }
+
+  getRoleLabel(role: string): string {
+    return (
+      this.roleOptions.find(r => r.value === role)?.label
+      ?? role
+    );
+  }
+
+  excluir(id: number): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        titulo: 'Excluir Usuário',
+        mensagem: 'Tem certeza que deseja excluir este usuário?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(confirmado => {
+      if (!confirmado) return;
+
+      this.userService.excluirUsuario(id).subscribe({
+        next: () => {
+          this.toastr.success(
+            'Usuário excluído com sucesso!',
+            'Sucesso'
+          );
+          this.loadUsers();
+        },
+        error: () => {
+          this.toastr.error(
+            'Não foi possível excluir o usuário.',
+            'Erro'
+          );
+        }
+      });
+    });
+  }
+
+  visualizar(id: string): void {
+      this.dialog.open(UserWiewDialogComponent, {
+        width: '800px',
+        maxWidth: '95vw',
+        data: { id }
+      });
+    }
 
 }

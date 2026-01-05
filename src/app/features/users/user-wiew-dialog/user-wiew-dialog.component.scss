@@ -1,0 +1,61 @@
+.dialog-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: var(--mat-sys-surface);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.dialog-content {
+  padding: 16px 24px;
+}
+
+/* Metadados */
+.meta-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  background: var(--mat-sys-surface-container-low);
+  font-size: 13px;
+}
+
+.meta-item mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+/* Descrição */
+.descricao-wrapper {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container);
+}
+
+.descricao {
+  line-height: 1.6;
+}
