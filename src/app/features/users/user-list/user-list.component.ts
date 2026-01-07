@@ -58,7 +58,6 @@ export class UserListComponent {
         this.dataSource.data = res.content;
         this.totalElements = res.totalElements;
 
-        // importante!
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sortTable;
       });
@@ -79,6 +78,7 @@ export class UserListComponent {
   openCreateUserDialog() {
     const dialogRef = this.dialog.open(UserFormDialogComponent, {
       width: '500px',
+      height: '500px',
       disableClose: true
     });
 
